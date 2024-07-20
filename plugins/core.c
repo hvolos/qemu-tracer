@@ -651,3 +651,12 @@ void plugin_scoreboard_free(struct qemu_plugin_scoreboard *score)
     g_array_free(score->data, TRUE);
     g_free(score);
 }
+
+void plugin_tb_flush(void)
+{
+    CPUState *cpu;
+
+    CPU_FOREACH(cpu) {
+        tb_flush(cpu);
+    }
+}

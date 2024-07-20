@@ -108,4 +108,6 @@ struct qemu_plugin_scoreboard *plugin_scoreboard_new(size_t element_size);
 
 void plugin_scoreboard_free(struct qemu_plugin_scoreboard *score);
 
+void plugin_tb_flush(void);
+
 #endif /* PLUGIN_H */

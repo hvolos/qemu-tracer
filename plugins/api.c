@@ -65,7 +65,8 @@ void qemu_plugin_register_deferred_init(void (*deferred_init)(void))
 }
 
 void qemu_plugin_call_deferred_init(void)
-{    
+{
+    plugin_tb_flush();
     (*qemu_plugin_deferred_init)();
 }
 
