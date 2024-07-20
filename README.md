@@ -37,16 +37,22 @@ cloud-localds seed.img user-data.yaml metadata.yaml
 
 ## with HMP monitor
 
-./build/qemu-system-x86_64 -m 2G -monitor telnet:127.0.0.1:1234,server,nowait -drive if=virtio,format=qcow2,file=ubuntu-18.04-minimal-cloudimg-amd64.img -drive if=virtio,format=raw,file=seed.img -serial telnet:localhost:4321,server,nowait -plugin ./build/contrib/plugins/libexeclog.so -d plugin -device virtio-net-pci,netdev=net0 -netdev user,id=net0,hostfwd=tcp::2222-:22 
+./build/qemu-system-x86_64 \
+-m 2G \
+-monitor telnet:127.0.0.1:1234,server,nowait \
+-drive if=virtio,format=qcow2,file=ubuntu-18.04-minimal-cloudimg-amd64.img \
+-drive if=virtio,format=raw,file=seed.img \
+-serial telnet:localhost:4321,server,nowait \
+-plugin ./build/contrib/plugins/libexeclog.so -d plugin \
+-device virtio-net-pci,netdev=net0 \
+-netdev user,id=net0,hostfwd=tcp::2222-:22
 
 ## with QMP monitor
 
-./build/qemu-system-x86_64 -m 2G -chardev socket,id=qmp,port=4444,host=localhost,server=on -mon chardev=qmp,mode=control,pretty=on
-
-# Login with SSH
-
-ssh -o "StrictHostKeyChecking no" -p 2222 ubuntu@0.0.0.0
-
+./build/qemu-system-x86_64 \
+-m 2G \
+-chardev socket,id=qmp,port=4444,host=localhost,server=on \
+-mon chardev=qmp,mode=control,pretty=on
 
 # References
 
