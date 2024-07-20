@@ -214,6 +214,5 @@ void qemu_plugin_call_deferred_init(void);
 
 void qmp_tracer_start(Error **errp)
 {
-    printf("Hello, world!\n");
     qemu_plugin_call_deferred_init();
 }

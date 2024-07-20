@@ -74,6 +74,7 @@ static void vcpu_mem(unsigned int cpu_index, qemu_plugin_meminfo_t info,
     if (hwaddr) {
         uint64_t addr = qemu_plugin_hwaddr_phys_addr(hwaddr);
         const char *name = qemu_plugin_hwaddr_device_name(hwaddr);
+        g_string_append_printf(s, ", vaddr==0x%08"PRIx64, vaddr);
         g_string_append_printf(s, ", 0x%08"PRIx64", %s", addr, name);
     } else {
         g_string_append_printf(s, ", 0x%08"PRIx64, vaddr);
@@ -441,11 +442,9 @@ static void add_regpat(char *regpat)
 static qemu_plugin_id_t execlog_plugin_id;
 
 void qemu_plugin_execlog_register_cb() {
-    printf("regular: qemu_plugin_execlog_register_cb\n");
     qemu_plugin_id_t id = execlog_plugin_id;
     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
-    printf("regular: qemu_plugin_execlog_register_cb: DONE\n");
 }
 
 /**
@@ -487,8 +486,6 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
     qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
     // qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
     // qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
-
-    printf("defer qemu plugin callback register\n");
 
     qemu_plugin_register_deferred_init(&qemu_plugin_execlog_register_cb);
 
