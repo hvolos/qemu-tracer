@@ -1862,3 +1862,16 @@ SRST
   List event channels in the guest
 ERST
 #endif
+
+    {
+        .name       = "tracer-start",
+        .args_type  = "",
+        .params     = "",
+        .help       = "Start execution tracing",
+        .cmd        = hmp_tracer_start,
+    },
+
+SRST
+``tracer_start``
+  Start execution tracing
+ERST

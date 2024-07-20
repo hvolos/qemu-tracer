@@ -443,3 +443,13 @@ void hmp_info_mtree(Monitor *mon, const QDict *qdict)
 
     mtree_info(flatview, dispatch_tree, owner, disabled);
 }
+
+void hmp_tracer_start(Monitor *mon, const QDict *qdict)
+{
+    Error *err = NULL;
+
+    qmp_tracer_start(&err);
+    if (hmp_handle_error(mon, err)) {
+        return;
+    }
+}

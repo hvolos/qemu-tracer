@@ -147,6 +147,21 @@ typedef void (*qemu_plugin_vcpu_udata_cb_t)(unsigned int vcpu_index,
                                             void *userdata);
 
 /**
+ * qemu_plugin_register_deferred_init() - Register a deferred initialization function
+ * @deferred_init: function to be called when invoking deferred initialization
+ *
+ */
+QEMU_PLUGIN_API
+void qemu_plugin_register_deferred_init(void (*deferred_init)(void));
+
+/**
+ * qemu_plugin_call_deferred_init() - Invoke deferred initialization functions
+ *
+ */
+QEMU_PLUGIN_API
+void qemu_plugin_call_deferred_init(void);
+
+/**
  * qemu_plugin_uninstall() - Uninstall a plugin
  * @id: this plugin's opaque ID
  * @cb: callback to be called once the plugin has been removed

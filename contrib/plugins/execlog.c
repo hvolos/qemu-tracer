@@ -438,6 +438,16 @@ static void add_regpat(char *regpat)
     g_ptr_array_add(rmatches, g_strdup(regpat));
 }
 
+static qemu_plugin_id_t execlog_plugin_id;
+
+void qemu_plugin_execlog_register_cb() {
+    printf("regular: qemu_plugin_execlog_register_cb\n");
+    qemu_plugin_id_t id = execlog_plugin_id;
+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+    printf("regular: qemu_plugin_execlog_register_cb: DONE\n");
+}
+
 /**
  * Install the plugin
  */
@@ -475,8 +485,14 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
 
     /* Register init, translation block and exit callbacks */
     qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
-    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+    // qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+    // qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+
+    printf("defer qemu plugin callback register\n");
+
+    qemu_plugin_register_deferred_init(&qemu_plugin_execlog_register_cb);
+
+    execlog_plugin_id = id;
 
     return 0;
 }

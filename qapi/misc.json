@@ -605,3 +605,10 @@
 { 'event': 'VFU_CLIENT_HANGUP',
   'data': { 'vfu-id': 'str', 'vfu-qom-path': 'str',
             'dev-id': 'str', 'dev-qom-path': 'str' } }
+
+##
+# @tracer-start:
+#
+# Since: 9.0
+##
+{ 'command': 'tracer-start' }

@@ -209,3 +209,11 @@ static void __attribute__((__constructor__)) monitor_init_qmp_commands(void)
                          qmp_marshal_qmp_capabilities,
                          QCO_ALLOW_PRECONFIG, 0);
 }
+
+void qemu_plugin_call_deferred_init(void);
+
+void qmp_tracer_start(Error **errp)
+{
+    printf("Hello, world!\n");
+    qemu_plugin_call_deferred_init();
+}

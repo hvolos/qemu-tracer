@@ -55,6 +55,20 @@
 #endif
 #endif
 
+/* Plugin Deferred Initialization Functions */
+
+static void (*qemu_plugin_deferred_init)(void);
+
+void qemu_plugin_register_deferred_init(void (*deferred_init)(void))
+{
+    qemu_plugin_deferred_init = deferred_init;
+}
+
+void qemu_plugin_call_deferred_init(void)
+{    
+    (*qemu_plugin_deferred_init)();
+}
+
 /* Uninstall and Reset handlers */
 
 void qemu_plugin_uninstall(qemu_plugin_id_t id, qemu_plugin_simple_cb_t cb)

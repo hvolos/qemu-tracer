@@ -183,3 +183,4 @@ void hmp_info_mtree(Monitor *mon, const QDict *qdict);
 void hmp_info_cryptodev(Monitor *mon, const QDict *qdict);
 
 #endif
+void hmp_tracer_start(Monitor *mon, const QDict *qdict);
